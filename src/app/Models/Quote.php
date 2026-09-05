@@ -21,6 +21,7 @@ class Quote extends Model
         'source',
         'source_text',
         'generated_email_subject',
+        'tax_rate',
         'generated_email_body',
         'valid_until',
     ];
@@ -32,6 +33,7 @@ class Quote extends Model
             'tax' => 'decimal:2',
             'total' => 'decimal:2',
             'valid_until' => 'date',
+            'tax_rate' => 'decimal:2',
         ];
     }
 
