@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\AI\QuoteInterpreterInterface;
-use App\Services\AI\FakeQuoteInterpreter;
+use App\Services\AI\OpenAIQuoteInterpreter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             QuoteInterpreterInterface::class,
-            FakeQuoteInterpreter::class,
+            OpenAIQuoteInterpreter::class,
         );
     }
 

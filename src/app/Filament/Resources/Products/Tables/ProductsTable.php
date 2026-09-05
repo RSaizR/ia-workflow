@@ -16,35 +16,40 @@ class ProductsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('sku')
-                    ->label('SKU')
-                    ->searchable(),
-                TextColumn::make('base_price')
-                    ->money()
+                    ->label('Nombre')
+                    ->searchable()
                     ->sortable(),
+
+                TextColumn::make('sku')
+                    ->label('Código / SKU')
+                    ->searchable()
+                    ->placeholder('-'),
+
+                TextColumn::make('base_price')
+                    ->label('Precio base')
+                    ->money('EUR', locale: 'es')
+                    ->sortable(),
+
                 TextColumn::make('unit')
-                    ->searchable(),
+                    ->label('Unidad'),
+
                 IconColumn::make('active')
+                    ->label('Activo')
                     ->boolean(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
+                    ->label('Creado')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Editar'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('Eliminar seleccionados'),
                 ]),
             ]);
     }

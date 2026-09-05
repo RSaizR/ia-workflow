@@ -15,34 +15,42 @@ class CustomersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->label('Nombre')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('company_name')
-                    ->searchable(),
+                    ->label('Empresa')
+                    ->searchable()
+                    ->placeholder('-'),
+
                 TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
+                    ->label('Correo electrónico')
+                    ->searchable()
+                    ->placeholder('-'),
+
                 TextColumn::make('phone')
-                    ->searchable(),
+                    ->label('Teléfono')
+                    ->placeholder('-'),
+
                 TextColumn::make('tax_id')
-                    ->searchable(),
+                    ->label('NIF / CIF')
+                    ->searchable()
+                    ->placeholder('-'),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
+                    ->label('Creado')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Editar'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('Eliminar seleccionados'),
                 ]),
             ]);
     }

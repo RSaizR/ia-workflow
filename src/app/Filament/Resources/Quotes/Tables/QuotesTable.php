@@ -14,45 +14,67 @@ class QuotesTable
     {
         return $table
             ->columns([
-                TextColumn::make('customer_id')
-                    ->numeric()
+                TextColumn::make('id')
+                    ->label('N.º')
                     ->sortable(),
+
+                TextColumn::make('customer.name')
+                    ->label('Cliente')
+                    ->searchable()
+                    ->placeholder('Sin cliente'),
+
                 TextColumn::make('status')
-                    ->searchable(),
-                TextColumn::make('subtotal')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('tax')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('total')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Estado')
+                    ->badge()
+                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                        'draft' => 'Borrador',
+                        'pending' => 'Pendiente',
+                        'approved' => 'Aprobado',
+                        'rejected' => 'Rechazado',
+                        'sent' => 'Enviado',
+                        default => $state ?? '-',
+                    }),
+
                 TextColumn::make('source')
-                    ->searchable(),
-                TextColumn::make('generated_email_subject')
-                    ->searchable(),
-                TextColumn::make('valid_until')
-                    ->date()
+                    ->label('Origen')
+                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                        'manual' => 'Manual',
+                        'ai' => 'Inteligencia artificial',
+                        'email' => 'Correo electrónico',
+                        default => $state ?? '-',
+                    }),
+
+                TextColumn::make('subtotal')
+                    ->label('Subtotal')
+                    ->money('EUR', locale: 'es'),
+
+                TextColumn::make('tax')
+                    ->label('IVA')
+                    ->money('EUR', locale: 'es'),
+
+                TextColumn::make('total')
+                    ->label('Total')
+                    ->money('EUR', locale: 'es')
                     ->sortable(),
+
+                TextColumn::make('valid_until')
+                    ->label('Válido hasta')
+                    ->date('d/m/Y')
+                    ->placeholder('-'),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
+                    ->label('Creado')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Editar'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->label('Eliminar seleccionados'),
                 ]),
             ]);
     }

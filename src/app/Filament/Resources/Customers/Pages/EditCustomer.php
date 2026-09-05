@@ -10,10 +10,21 @@ class EditCustomer extends EditRecord
 {
     protected static string $resource = CustomerResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Editar cliente';
+    }
+
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->label('Eliminar cliente'),
         ];
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

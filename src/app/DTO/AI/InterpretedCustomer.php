@@ -10,6 +10,7 @@ final readonly class InterpretedCustomer
         public ?string $email = null,
         public ?string $phone = null,
         public ?string $taxId = null,
+        public ?string $address = null,
     ) {
     }
 }

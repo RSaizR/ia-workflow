@@ -18,7 +18,13 @@ class QuoteResource extends Resource
 {
     protected static ?string $model = Quote::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+
+    protected static ?string $modelLabel = 'presupuesto';
+
+    protected static ?string $pluralModelLabel = 'presupuestos';
+
+    protected static ?string $navigationLabel = 'Presupuestos';
 
     public static function form(Schema $schema): Schema
     {
@@ -32,9 +38,7 @@ class QuoteResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

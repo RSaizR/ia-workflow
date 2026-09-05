@@ -10,10 +10,21 @@ class EditProduct extends EditRecord
 {
     protected static string $resource = ProductResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Editar producto';
+    }
+
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->label('Eliminar producto'),
         ];
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

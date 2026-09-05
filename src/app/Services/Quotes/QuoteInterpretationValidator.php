@@ -18,8 +18,11 @@ class QuoteInterpretationValidator
                 ->where('sku', $item->productCode)
                 ->where('active', true)
                 ->with([
-                    'options' => fn ($query) => $query->where('active', true),
-                    'options.values' => fn ($query) => $query->where('active', true),
+                    'options' => fn ($query) => $query
+                        ->where('active', true),
+
+                    'options.values' => fn ($query) => $query
+                        ->where('active', true),
                 ])
                 ->first();
 
@@ -46,8 +49,10 @@ class QuoteInterpretationValidator
             $selectedOptionValues = [];
 
             foreach ($item->options as $optionCode => $valueCode) {
-                $option = $product->options
-                    ->firstWhere('code', $optionCode);
+                $option = $product->options->firstWhere(
+                    'code',
+                    $optionCode
+                );
 
                 if (! $option) {
                     $errors[] = [
@@ -59,8 +64,10 @@ class QuoteInterpretationValidator
                     continue;
                 }
 
-                $value = $option->values
-                    ->firstWhere('code', $valueCode);
+                $value = $option->values->firstWhere(
+                    'code',
+                    $valueCode
+                );
 
                 if (! $value) {
                     $errors[] = [
@@ -76,7 +83,10 @@ class QuoteInterpretationValidator
             }
 
             foreach ($product->options->where('required', true) as $requiredOption) {
-                if (! array_key_exists($requiredOption->code, $item->options)) {
+                if (! array_key_exists(
+                    $requiredOption->code,
+                    $item->options
+                )) {
                     $missingInformation[] = [
                         'item' => $index,
                         'field' => $requiredOption->code,
@@ -94,6 +104,7 @@ class QuoteInterpretationValidator
 
         return [
             'valid' => empty($errors),
+            'complete' => empty($errors) && empty($missingInformation),
             'errors' => $errors,
             'missing_information' => $missingInformation,
             'items' => $validatedItems,

@@ -13,17 +13,36 @@ class CustomerForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
-                TextInput::make('company_name'),
+                    ->label('Nombre')
+                    ->required()
+                    ->maxLength(255),
+
+                TextInput::make('company_name')
+                    ->label('Empresa')
+                    ->maxLength(255),
+
                 TextInput::make('email')
-                    ->label('Email address')
-                    ->email(),
+                    ->label('Correo electrónico')
+                    ->email()
+                    ->maxLength(255),
+
                 TextInput::make('phone')
-                    ->tel(),
-                TextInput::make('tax_id'),
+                    ->label('Teléfono')
+                    ->tel()
+                    ->maxLength(50),
+
+                TextInput::make('tax_id')
+                    ->label('NIF / CIF')
+                    ->maxLength(50),
+
                 Textarea::make('address')
+                    ->label('Dirección')
+                    ->rows(3)
                     ->columnSpanFull(),
+
                 Textarea::make('notes')
+                    ->label('Observaciones')
+                    ->rows(4)
                     ->columnSpanFull(),
             ]);
     }
