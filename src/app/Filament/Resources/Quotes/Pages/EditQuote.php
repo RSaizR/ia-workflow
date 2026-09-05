@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Quotes\Pages;
 
 use App\Filament\Resources\Quotes\QuoteResource;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
@@ -12,12 +13,25 @@ class EditQuote extends EditRecord
 
     public function getTitle(): string
     {
-        return 'Editar presupuesto';
+        return "Editar presupuesto #{$this->record->id}";
     }
 
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('viewQuote')
+                ->label('Ver presupuesto')
+                ->icon('heroicon-o-eye')
+                ->color('primary')
+                ->url(
+                    fn (): string => QuoteResource::getUrl(
+                        'view',
+                        [
+                            'record' => $this->record,
+                        ]
+                    )
+                ),
+
             DeleteAction::make()
                 ->label('Eliminar presupuesto'),
         ];
@@ -42,10 +56,7 @@ class EditQuote extends EditRecord
 
         $data['subtotal'] = round($subtotal, 2);
         $data['tax'] = round($tax, 2);
-        $data['total'] = round(
-            $subtotal + $tax,
-            2
-        );
+        $data['total'] = round($subtotal + $tax, 2);
 
         return $data;
     }

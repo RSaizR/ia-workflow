@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Quotes;
 use App\Filament\Resources\Quotes\Pages\CreateQuote;
 use App\Filament\Resources\Quotes\Pages\EditQuote;
 use App\Filament\Resources\Quotes\Pages\ListQuotes;
+use App\Filament\Resources\Quotes\Pages\ViewQuote;
 use App\Filament\Resources\Quotes\Schemas\QuoteForm;
+use App\Filament\Resources\Quotes\Schemas\QuoteInfolist;
 use App\Filament\Resources\Quotes\Tables\QuotesTable;
 use App\Models\Quote;
 use BackedEnum;
@@ -31,6 +33,11 @@ class QuoteResource extends Resource
         return QuoteForm::configure($schema);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return QuoteInfolist::configure($schema);
+    }
+
     public static function table(Table $table): Table
     {
         return QuotesTable::configure($table);
@@ -46,6 +53,7 @@ class QuoteResource extends Resource
         return [
             'index' => ListQuotes::route('/'),
             'create' => CreateQuote::route('/create'),
+            'view' => ViewQuote::route('/{record}'),
             'edit' => EditQuote::route('/{record}/edit'),
         ];
     }
